@@ -31,31 +31,33 @@ class BetManager:
             results[fight[0]] = [fight[4], fight[3], fight[2]]
         total_score = 0
         for key in player.picks.keys():
+            fight_score = 0
             correct = 0
             picks = player.picks
             # check for draw and correct fighter
             if results[key][0] != 'Draw':
                 if picks[key][0] == results[key][0]:
-                    total_score += 1
+                    fight_score += 1
                     correct += 1
             # check if method is correct
             if results[key][1] == '':  # handles error incase of draw in a fight
-                results[key][1] = 'DEC'
+                results[key][1] = 'Decision'
             if picks[key][1] == results[key][1]:
-                if picks[key][1] == 'DEC':
-                    total_score += 2
+                if picks[key][1] == 'Decision':
+                    fight_score += 2
                     correct += 2
                 else:
-                    total_score += 1
+                    fight_score += 1
                     correct += 1
             # check if round correct
-            if picks[key][1] != 'DEC' != results[key][1]:
+            if picks[key][1] != 'Decision' != results[key][1]:
                 if picks[key][2] == results[key][2]:
-                    total_score += 1
+                    fight_score += 1
                     correct += 1
             # bonus point for perfect pick
             if correct == 3:
-                total_score += 1
+                fight_score += 1
+            total_score += fight_score
         return total_score
 
     def save_bet(self, player, event_num):

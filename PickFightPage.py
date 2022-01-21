@@ -111,14 +111,14 @@ class PickFightPage(ttk.Frame):
         elif method == 'Submission':
             self.ko_selected.set(False)
             self.decision_selected.set(False)
-            self.method_picked = 'SUB'
+            self.method_picked = 'Submission'
             self.round_option.configure(state='enabled')
 
         else:
             self.ko_selected.set(False)
             self.submission_selected.set(False)
             self.round_option.configure(state='disabled')
-            self.method_picked = 'DEC'
+            self.method_picked = 'Decision'
 
     def fill_information(self, fight):
         self.fighter_one_name.configure(text=fight[0])
