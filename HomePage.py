@@ -38,6 +38,7 @@ class HomePage(ttk.Frame):
         # Entries
         self.event_number_entry = ttk.Entry(self, width=3, font=('Arial', 25), justify='center')
         self.event_number_entry.focus()
+        self.event_number_entry.insert(0, '269')
         # Buttons
         self.view_bets_button = ttk.Button(self, style='homeView.TButton', text='VIEW BETS', command=self.results_button_pressed)
         self.add_bet_button = ttk.Button(self, style='homeAdd.TButton', text='ADD BET', command=self.next_button_pressed)

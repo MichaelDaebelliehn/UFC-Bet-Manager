@@ -1,8 +1,6 @@
 import pickle
-import tkinter
 import HomePage
 import NamePage
-import random
 
 class BetManager:
 
@@ -12,7 +10,7 @@ class BetManager:
         self.bets = {}
     
     def add_player(self, frames, fights):
-        event_num = frames[HomePage.HomePage].event_number_entry.get()
+        event_num = self.controller.event_num
         player_name = frames[NamePage.NamePage].player_name_entry.get().strip()
         player_picks = {}
         for fight in fights:
@@ -40,7 +38,7 @@ class BetManager:
                     fight_score += 1
                     correct += 1
             # check if method is correct
-            if results[key][1] == '':  # handles error incase of draw in a fight
+            if results[key][1] == '' and results[key][0] == 'Draw':  # handles error incase of draw in a fight
                 results[key][1] = 'Decision'
             if picks[key][1] == results[key][1]:
                 if picks[key][1] == 'Decision':
@@ -58,6 +56,7 @@ class BetManager:
             if correct == 3:
                 fight_score += 1
             total_score += fight_score
+            player.picks[key].append(fight_score)
         return total_score
 
     def save_bet(self, player, event_num):
@@ -85,7 +84,6 @@ class BetManager:
 
     def delete_bet(self, event_num, name):
         if name == '': return
-        print(name)
         self.load_bets(event_num)
         self.bets.pop(name, None)
         self.save_bets(event_num)
@@ -95,7 +93,7 @@ class BetManager:
         try:
             self.bets = pickle.load(open(filename, 'rb'))
         except Exception as e:
-            print(f'printing error in load_bets --> {e}')
+            self.bets = {}
 
     def save_bets(self, event_num):
         filename = 'events\\ufc_' + str(event_num) + '.pkl'

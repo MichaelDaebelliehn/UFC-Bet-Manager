@@ -5,6 +5,7 @@ from HomePage import HomePage
 from NamePage import NamePage
 from PickFightPage import PickFightPage
 from ResultsPage import ResultsPage
+from PickInfoPage import PickInfoPage
 from BetManager import BetManager
 from FightCard import FightCard
 from tkinter import PhotoImage, ttk
@@ -14,7 +15,7 @@ import concurrent.futures
 class MainApplication(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        self.title('UFC Bet Manager')
+        self.title('UFC Bet Manager vBeta 1.0')
         img = PhotoImage(file='imgs\\ufc_icon.png')
         self.iconphoto(False, img)
         self.s = Style()
@@ -29,7 +30,7 @@ class MainApplication(tk.Tk):
         self.buffer_frame.grid(row=0, column=0, sticky='nsew')
         self.buffer_frame.grid_columnconfigure(0, weight=1)
         self.buffer_frame.grid_rowconfigure(0, weight=1)
-        for F in (HomePage, NamePage, PickFightPage, ResultsPage):
+        for F in (HomePage, NamePage, PickFightPage, ResultsPage, PickInfoPage):
             frame = F(self.container, self, self.s)
             self.frames[F] = frame
         self.bind('<Escape>', self.close_window)
@@ -76,7 +77,7 @@ class MainApplication(tk.Tk):
     def fill_results_page(self, event_num):
         card = FightCard(event_num)
         self.fights = card.card_details
-        self.frames[ResultsPage].fill_page()
+        self.frames[ResultsPage].fill_page(event_num)
 
     def clear_frames(self):
         for fight in self.fights:

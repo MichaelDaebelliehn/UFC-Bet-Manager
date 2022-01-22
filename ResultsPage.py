@@ -1,8 +1,7 @@
-from distutils import command
 import tkinter
-from tkinter import ttk, messagebox
+from tkinter import ttk
 import HomePage
-from FightCard import FightCard
+from PickInfoPage import PickInfoPage, PickFiller
 
 class ResultsPage(ttk.Frame):
     
@@ -10,10 +9,10 @@ class ResultsPage(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
         self.s = style_manager
+        self.pick_filler = PickFiller(controller, controller.bet_manager)
         self.initialize_styles()
         self.initialize_widgets()
         self.display_widgets()
-        self.fill_page()
 
     def initialize_styles(self):
         # Labels
@@ -45,9 +44,8 @@ class ResultsPage(ttk.Frame):
         self.delete_button.grid(row=2, column=0, pady=10, padx=10, ipady=10)
         self.home_button.grid(row=2, column=2, pady=10, padx=10, ipady=10)
 
-    def fill_page(self):
+    def fill_page(self, event_num):
         self.list_box.delete(0, tkinter.END)
-        event_num = self.controller.event_num
         if event_num == 0: return
         scores = self.controller.bet_manager.get_scores(event_num)
         for x, score in enumerate(scores):
@@ -55,8 +53,10 @@ class ResultsPage(ttk.Frame):
             self.list_box.insert(0, line)
 
     def view_bet(self):
-        # card = FightCard(269)
-        pass
+        index = self.list_box.curselection()[0]
+        name = self.list_box.get(index)[2:-6].strip()
+        self.pick_filler.load_pick_info(name)
+        self.controller.show_frame(PickInfoPage)
 
     def delete_bet(self):
         index = self.list_box.curselection()[0]
@@ -65,3 +65,4 @@ class ResultsPage(ttk.Frame):
         if confirmed:
             self.controller.bet_manager.delete_bet(self.controller.event_num, name)
             self.list_box.delete(index)
+        self.fill_page(self.controller.event_num)
