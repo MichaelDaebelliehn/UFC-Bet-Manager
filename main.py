@@ -11,6 +11,7 @@ from FightCard import FightCard
 from tkinter import PhotoImage, ttk
 from tkinter.ttk import Style
 import concurrent.futures
+from multiprocessing import freeze_support
 
 class MainApplication(tk.Tk):
     def __init__(self, *args, **kwargs):
@@ -37,6 +38,7 @@ class MainApplication(tk.Tk):
         self.current_frame = self.frames[HomePage]
         self.configure_container()
         self.show_frame(HomePage)
+        freeze_support()
 
 
     def close_window(self, root):

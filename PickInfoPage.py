@@ -8,7 +8,6 @@ class PickInfoPage(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
         self.s = style_manager
-        self.initialize_styles()
         self.initialize_widgets()
         self.display_widgets()
 
