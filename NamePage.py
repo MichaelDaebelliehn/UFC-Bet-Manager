@@ -1,5 +1,6 @@
 import HomePage, tkinter
 from tkinter import ttk
+from tkinter import messagebox
 
 class NamePage(ttk.Frame):
     
@@ -36,11 +37,11 @@ class NamePage(ttk.Frame):
     def display_widgets(self):
         # # Labels
         self.new_bet_header.grid(column=0, row=0, columnspan=2, pady=10)
-        self.name_label.grid(column=0, row=1, columnspan=2, pady=(25, 10))
-        self.bet_label.grid(column=0, row=3, pady=(20,0), columnspan=2)
+        self.name_label.grid(column=0, row=1, columnspan=2, pady=(25, 0))
+        # self.bet_label.grid(column=0, row=3, pady=(20,0), columnspan=2)
         # Entries and Checkboxes
-        self.player_name_entry.grid(column=0, row=2, columnspan=2)
-        self.bet_check_box.grid(column=0, row=4, columnspan=2)
+        self.player_name_entry.grid(column=0, row=2, pady=20, columnspan=2)
+        # self.bet_check_box.grid(column=0, row=4, columnspan=2)
         self.is_betting.set(True)
         # Buttons
         self.back_button.grid(column=0, row=5, pady=20, padx=50, ipady=10)

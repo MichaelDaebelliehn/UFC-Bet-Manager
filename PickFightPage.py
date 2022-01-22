@@ -129,8 +129,10 @@ class PickFightPage(ttk.Frame):
             self.round_option.grid(row=5, column=1, pady=10, padx=(0, 50), sticky='e')
 
     def fill_fighter_pics(self, img1, img2):
-        f1 = ImageTk.PhotoImage(img1.result())
-        f2 = ImageTk.PhotoImage(img2.result())
+        # f1 = ImageTk.PhotoImage(img1.result())
+        # f2 = ImageTk.PhotoImage(img2.result())
+        f1 = ImageTk.PhotoImage(img1)
+        f2 = ImageTk.PhotoImage(img2)
         self.fighter_one_img.configure(image=f1)
         self.fighter_two_img.configure(image=f2)
         self.fighter_one_img.image = f1

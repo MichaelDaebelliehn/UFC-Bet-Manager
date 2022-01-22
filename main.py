@@ -65,10 +65,14 @@ class MainApplication(tk.Tk):
         self.fights = card.card_details
         self.total_fights = len(self.fights)
         fighter_pics = {}
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            for fight in self.fights:
-                fighter_pics[fight[0]] = executor.submit(get_player_pic, fight[-2])
-                fighter_pics[fight[1]] = executor.submit(get_player_pic, fight[-1])
+        # with concurrent.futures.ProcessPoolExecutor() as executor:
+        #     for fight in self.fights:
+        #         fighter_pics[fight[0]] = executor.submit(get_player_pic, fight[-2])
+        #         fighter_pics[fight[1]] = executor.submit(get_player_pic, fight[-1])
+
+        for fight in self.fights:
+                fighter_pics[fight[0]] = get_player_pic(fight[-2])
+                fighter_pics[fight[1]] = get_player_pic(fight[-1])
         for fight in self.fights:
             frame = PickFightPage(self.container, self, self.s)
             self.frames[fight[0]] = frame
