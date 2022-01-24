@@ -61,8 +61,8 @@ class MainApplication(tk.Tk):
         frame.grid(row=0, column=0)
 
     def fill_fight_frames(self, event_num):
-        card = FightCard(event_num)
-        self.fights = card.card_details
+        self.card = FightCard(event_num)
+        self.fights = self.card.card_details
         self.total_fights = len(self.fights)
         fighter_pics = {}
         # with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -81,8 +81,8 @@ class MainApplication(tk.Tk):
         self.show_frame(NamePage)
 
     def fill_results_page(self, event_num):
-        card = FightCard(event_num)
-        self.fights = card.card_details
+        self.card = FightCard(event_num)
+        self.fights = self.card.card_details
         self.frames[ResultsPage].fill_page(event_num)
 
     def clear_frames(self):

@@ -1,14 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
-import time
+from selenium import webdriver
 
 
 class FightCard:
 
     def __init__(self, event_num):
         self.event_num = event_num
-        url = "https://www.ufc.com/event/ufc-" + str(self.event_num)
-        r = requests.get(url)
+        self.url = "https://www.ufc.com/event/ufc-" + str(self.event_num)
+        r = requests.get(self.url)
         self.soup = BeautifulSoup(r.text, features="lxml")
         self.num_fights = 0
         self.key_names = []
@@ -76,3 +76,13 @@ class FightCard:
         details.append(red_img_link)
         details.append(blue_img_link)
         return details
+
+    def get_live_page(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        browser = webdriver.Chrome(executable_path='drivers\\chromedriver.exe', options=options)
+        browser.get(self.url)
+        html = browser.page_source
+        browser.close()
+        self.soup = BeautifulSoup(html, features='lxml')
+        return self.get_card_details()
