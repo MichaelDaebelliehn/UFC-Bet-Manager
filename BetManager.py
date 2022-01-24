@@ -23,12 +23,11 @@ class BetManager:
         self.save_bet(player, event_num)
         self.controller.show_frame(HomePage.HomePage)
 
-    def get_player_score(self, player, fights, sel=False):
+    def get_player_score(self, player, fights, force_update=False):
         results = {}
         for fight in fights:
             results[fight[0]] = [fight[4], fight[3], fight[2]]
         total_score = 0
-        flag = False
         for key in player.picks.keys():
             fight_score = 0
             correct = 0
@@ -49,8 +48,6 @@ class BetManager:
                     fight_score += 1
                     correct += 1
             # check if round correct
-            if results[key][2] != '':
-                flag = True
             if picks[key][1] != 'Decision' != results[key][1]:
                 if picks[key][2] == results[key][2]:
                     fight_score += 1
@@ -60,11 +57,6 @@ class BetManager:
                 fight_score += 1
             total_score += fight_score
             player.picks[key].append(fight_score)
-
-        if not flag and not sel:
-            fights = self.controller.card.get_live_page()
-            return self.get_player_score(player, fights, True)
-
 
         return total_score
 
@@ -78,12 +70,16 @@ class BetManager:
             self.save_bets(event_num)
 
 
-    def get_scores(self, event_num):
+    def get_scores(self, event_num, force_update=False):
         try:
             self.load_bets(event_num)
             scores = {}
+            if force_update:
+                fights = self.controller.card.get_live_page()
+            else:
+                fights = self.controller.fights
             for bet in self.bets.values():
-                bet.score = self.get_player_score(self.bets[bet.name], self.controller.fights)
+                bet.score = self.get_player_score(self.bets[bet.name], fights)
                 scores[bet.name] = bet.score
             sorted_scores = sorted(scores.items(), key=lambda v: v[1])
             return sorted_scores

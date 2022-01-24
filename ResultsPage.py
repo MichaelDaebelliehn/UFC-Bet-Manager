@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import ttk
+from turtle import width
 import HomePage
 from PickInfoPage import PickInfoPage, PickFiller
 
@@ -21,6 +22,7 @@ class ResultsPage(ttk.Frame):
         self.s.configure('view.TButton', background='green')
         self.s.configure('delete.TButton', background='red')
         self.s.configure('home.TButton', background='blue')
+        self.s.configure('force.TButton', background='yellow')
 
 
     def initialize_widgets(self):
@@ -33,21 +35,24 @@ class ResultsPage(ttk.Frame):
         self.home_button = ttk.Button(self, text='Home', style='home.TButton', command=lambda:self.controller.show_frame(HomePage.HomePage))
         self.view_button = ttk.Button(self, text='View Bet', style='view.TButton', command=self.view_bet)
         self.delete_button = ttk.Button(self, text='Delete Bet', style='delete.TButton', command=self.delete_bet)
+        self.force_update_button = ttk.Button(self, text='Force Update', style='force.TButton', command=self.force_update)
 
     def display_widgets(self):
         # Labels
-        self.header_label.grid(row=0, column=0, columnspan=3, sticky='w')
+        self.header_label.grid(row=0, column=0, columnspan=4, padx=35, sticky='w')
         # Entries and Scrollbars
-        self.list_box.grid(row=1, column=0, columnspan=3, pady=(0, 10))
+        self.list_box.grid(row=1, column=0, columnspan=4, pady=(0, 10))
         # Buttons
         self.view_button.grid(row=2, column=1, pady=10, padx=10, ipady=10)
         self.delete_button.grid(row=2, column=0, pady=10, padx=10, ipady=10)
         self.home_button.grid(row=2, column=2, pady=10, padx=10, ipady=10)
+        self.force_update_button.grid(row=2, column=3, pady=10, padx=10, ipady=10)
 
-    def fill_page(self, event_num):
+
+    def fill_page(self, event_num, force_update=False):
         self.list_box.delete(0, tkinter.END)
         if event_num == 0: return
-        scores = self.controller.bet_manager.get_scores(event_num)
+        scores = self.controller.bet_manager.get_scores(event_num, force_update)
         for x, score in enumerate(scores):
             line = '{:7}{:10}{:6}'.format(str(len(scores)-x), score[0], str(score[1]))
             self.list_box.insert(0, line)
@@ -66,3 +71,6 @@ class ResultsPage(ttk.Frame):
             self.controller.bet_manager.delete_bet(self.controller.event_num, name)
             self.list_box.delete(index)
         self.fill_page(self.controller.event_num)
+
+    def force_update(self):
+        self.fill_page(self.controller.event_num, True)
