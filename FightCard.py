@@ -34,7 +34,6 @@ class FightCard:
         self.key_names = names[0::2]
         # get fight results
         round = fight.find(class_="c-listing-fight__result-text round").get_text()
-        # print(round)
         method = fight.find(class_="c-listing-fight__result-text method").get_text().split(' ')[0]
         red_result = fight.find(class_="c-listing-fight__corner-body--red").get_text().replace("\n", "").split()[0]
         if red_result == "Win":
