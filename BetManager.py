@@ -8,6 +8,8 @@ class BetManager:
         self.total_pot = 0
         self.controller = controller
         self.bets = {}
+        self.force_updated = False
+        self.forced_fights = None
     
     def add_player(self, frames, fights):
         event_num = self.controller.event_num
@@ -23,8 +25,10 @@ class BetManager:
         self.save_bet(player, event_num)
         self.controller.show_frame(HomePage.HomePage)
 
-    def get_player_score(self, player, fights, force_update=False):
+    def get_player_score(self, player, fights):
         results = {}
+        if self.force_updated:
+            fights = self.forced_fights
         for fight in fights:
             results[fight[0]] = [fight[4], fight[3], fight[2]]
         total_score = 0
@@ -75,7 +79,9 @@ class BetManager:
             self.load_bets(event_num)
             scores = {}
             if force_update:
+                self.force_updated = True
                 fights = self.controller.card.get_live_page()
+                self.forced_fights = fights
             else:
                 fights = self.controller.fights
             for bet in self.bets.values():
