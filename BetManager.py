@@ -26,12 +26,14 @@ class BetManager:
         self.controller.show_frame(HomePage.HomePage)
 
     def get_player_score(self, player, fights):
+        print('______________________')
         results = {}
         if self.force_updated:
             fights = self.forced_fights
         for fight in fights:
             results[fight[0]] = [fight[4], fight[3], fight[2]]
         total_score = 0
+        print(results)
         for key in player.picks.keys():
             fight_score = 0
             picks = player.picks
@@ -47,10 +49,17 @@ class BetManager:
             # check if round correct
             if results[key][0] == 'Francis Ngannou':
                 print(results[key][2])
-            if picks[key][1] != 'Decision' != results[key][1]:
+            if results[key][1] != 'Decision':
+                # round
                 if picks[key][2] == results[key][2]:
                     fight_score += 1
             # bonus point for perfect pick
+            if picks[key][1] != 'Decision':
+                if fight_score == 3:
+                    fight_score += 1
+            elif picks[key][1] == 'Decision':
+                if fight_score == 2:
+                    fight_score += 1
             total_score += fight_score
             player.picks[key].append(fight_score)
 

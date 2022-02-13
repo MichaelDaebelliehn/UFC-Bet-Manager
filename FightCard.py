@@ -32,18 +32,22 @@ class FightCard:
         for line in name_soup:
             names.append(line.get_text().strip())
         self.key_names = names[0::2]
+        
         # get fight results
         round = fight.find(class_="c-listing-fight__result-text round").get_text()
         method = fight.find(class_="c-listing-fight__result-text method").get_text().split(' ')[0]
-        red_result = fight.find(class_="c-listing-fight__corner-body--red").get_text().replace("\n", "").split()[0]
+        red_result = fight.find(class_="c-listing-fight__corner-body--red").get_text().replace("\n", " ").split()[0]
+        blue_result = fight.find(class_="c-listing-fight__corner-body--blue").get_text().replace("\n", " ").split()[0]
         if red_result == "Win":
             winner = names[0]
         elif red_result == "Draw":
             winner = "Draw"
-        elif red_result == "Loss":
+        elif blue_result == "Win":
             winner = names[1]
         else:
             winner = "N/A"
+        if names[1] == 'Maxim Grishin':
+            print(blue_result)
         # get fighter pics
         imgs = fight.find_all(class_='image-style-event-fight-card-upper-body-of-standing-athlete')
         if len(imgs) < 2:
