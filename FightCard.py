@@ -46,8 +46,6 @@ class FightCard:
             winner = names[1]
         else:
             winner = "N/A"
-        if names[1] == 'Maxim Grishin':
-            print(blue_result)
         # get fighter pics
         imgs = fight.find_all(class_='image-style-event-fight-card-upper-body-of-standing-athlete')
         if len(imgs) < 2:
