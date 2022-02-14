@@ -32,7 +32,6 @@ class MainApplication(tk.Tk):
         for F in (HomePage, NamePage, PickFightPage, ResultsPage, PickInfoPage):
             frame = F(self.container, self, self.s)
             self.frames[F] = frame
-        self.bind('<Escape>', self.close_window)
         self.current_frame = self.frames[HomePage]
         self.configure_container()
         self.show_frame(HomePage)
