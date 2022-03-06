@@ -14,6 +14,7 @@ class PickFightPage(ttk.Frame):
         self.method_picked = ''
         self.round_options = ['1', '2', '3']
         self.title_round_options = ['1', '2', '3', '4', '5']
+        self.round_override = False
         self.initialize_styles()
         self.initialize_widgets()
         self.display_widgets()
@@ -47,6 +48,7 @@ class PickFightPage(ttk.Frame):
         self.fight_one_selected = tkinter.BooleanVar()
         self.fight_two_selected = tkinter.BooleanVar()
         self.ko_selected = tkinter.BooleanVar()
+        self.override_selected = tkinter.BooleanVar()
         self.submission_selected = tkinter.BooleanVar()
         self.decision_selected = tkinter.BooleanVar()
         self.fighter_one_checkbox = ttk.Checkbutton(self, command=lambda:self.fight_selected(0), variable=self.fight_one_selected)
@@ -54,6 +56,7 @@ class PickFightPage(ttk.Frame):
         self.knockout_checkbox = ttk.Checkbutton(self, command=lambda:self.method_selected('KO'), variable=self.ko_selected)
         self.submission_checkbox = ttk.Checkbutton(self, command=lambda:self.method_selected('Submission'), variable=self.submission_selected)
         self.decision_checkbox = ttk.Checkbutton(self, command=lambda:self.method_selected('Decision'), variable=self.decision_selected)
+        self.round_override_checkbox = ttk.Checkbutton(self, command=self.overrideRounds, variable=self.override_selected)
         # Buttons
         self.back_button = ttk.Button(self, text='Back', style='back.TButton', command=self.controller.show_prev_fight)
         self.next_button = ttk.Button(self, text="Next", style='next.TButton', command=self.next_button_pressed)
@@ -78,9 +81,21 @@ class PickFightPage(ttk.Frame):
         self.submission_checkbox.grid(row=5, column=0, pady=10, padx=30, sticky='e')
         self.decision_checkbox.grid(row=5, column=1, pady=10, padx=30, sticky='w')
         self.round_option.grid(row=5, column=1, pady=10, padx=(0, 50), sticky='e')
+        self.round_override_checkbox.grid(row=5, column=1, sticky='e', padx=(0, 25))
+        self.override_selected.set(False)
+        
         # Buttons
         self.back_button.grid(row=6, column=0, pady=10, ipady=10)
         self.next_button.grid(row=6, column=1, pady=10, ipady=10)
+    
+    def overrideRounds(self):
+        self.round_override = not self.round_override
+        self.round_option.grid_forget()
+        if self.round_override:
+            self.round_option = ttk.OptionMenu(self, self.round_pick, '-', *self.title_round_options) # disgusting but it works
+        else:
+            self.round_option = ttk.OptionMenu(self, self.round_pick, '-', *self.round_options)
+        self.round_option.grid(row=5, column=1, pady=10, padx=(0, 50), sticky='e')
 
     def next_button_pressed(self):
         if self.fight_one_selected.get() == False == self.fight_two_selected.get():
