@@ -29,7 +29,7 @@ class PickInfoPage(ttk.Frame):
 
     def back_button_pressed(self):
         self.list_box.delete(0, tkinter.END)
-        self.controller.show_frame(ResultsPage.ResultsPage)
+        self.controller.show_results_page()
 
 class PickFiller:
 
