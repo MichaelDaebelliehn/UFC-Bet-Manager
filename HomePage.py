@@ -1,7 +1,6 @@
 from tkinter import ttk
 import tkinter
 from PIL import ImageTk, Image
-from ResultsPage import ResultsPage
 
 class HomePage(ttk.Frame):
     
@@ -67,7 +66,7 @@ class HomePage(ttk.Frame):
         event_num = self.event_number_entry.get()
         self.controller.set_event_number(event_num)
         self.controller.fill_results_page(event_num)
-        self.controller.show_frame(ResultsPage)
+        self.controller.show_results_page()
 
     def convert_resize_image(self, file, width, height):
         img = Image.open(file)

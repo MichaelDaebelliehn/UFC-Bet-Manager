@@ -56,6 +56,12 @@ class MainApplication(tk.Tk):
         self.current_frame = frame
         frame.grid(row=0, column=0)
 
+    def show_home_page(self):
+        self.show_frame(HomePage)
+
+    def show_results_page(self):
+        self.show_frame(ResultsPage)
+
     def fill_fight_frames(self, event_num):
         self.card = FightCard(event_num)
         self.fights = self.card.card_details

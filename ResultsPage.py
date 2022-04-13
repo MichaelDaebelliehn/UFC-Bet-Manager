@@ -31,9 +31,11 @@ class ResultsPage(ttk.Frame):
         self.header_label = ttk.Label(self, text='{:7}{:10}{:6}'.format(headers[0], headers[1], headers[2]), style='ranks.TLabel', font=('Monaco', 15))
         # Entries and Scrollbars
         self.list_box = tkinter.Listbox(self, width=25, height=8, background='#484848', foreground='white', border=5, font=('Monaco', 15))
+        self.list_box.bind('<Double-Button-1>', self.view_bet)
         # Buttons
         self.home_button = ttk.Button(self, text='Home', style='home.TButton', command=lambda:self.controller.show_frame(HomePage.HomePage))
-        self.view_button = ttk.Button(self, text='View Bet', style='view.TButton', command=self.view_bet)
+        self.view_button = ttk.Button(self, text='View Bet', style='view.TButton', command=self.edit_bet)
+        self.edit_button = ttk.Button(self, text='View Bet', style='view.TButton', command=self.view_bet)
         self.delete_button = ttk.Button(self, text='Delete Bet', style='delete.TButton', command=self.delete_bet)
         self.force_update_button = ttk.Button(self, text='Force Update', style='force.TButton', command=self.force_update)
 
@@ -57,11 +59,15 @@ class ResultsPage(ttk.Frame):
             line = '{:7}{:10}{:6}'.format(str(len(scores)-x), score[0], str(score[1]))
             self.list_box.insert(0, line)
 
-    def view_bet(self):
+    def view_bet(self, idk_how_to_program='i really suck at this'):
         index = self.list_box.curselection()[0]
         name = self.list_box.get(index)[2:-6].strip()
         self.pick_filler.load_pick_info(name)
         self.controller.show_frame(PickInfoPage)
+
+    def edit_bet(self):
+        index = self.list_box.curselection()[0]
+        name = self.list_box.get(index)[2:-6].strip()
 
     def delete_bet(self):
         index = self.list_box.curselection()[0]

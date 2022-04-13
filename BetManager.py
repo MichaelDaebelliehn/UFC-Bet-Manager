@@ -1,5 +1,4 @@
 import pickle
-import HomePage
 import NamePage
 
 class BetManager:
@@ -23,7 +22,7 @@ class BetManager:
             player_picks[fight[0]] = [winner_pick, method_pick, round_pick]
         player = Player(player_name, player_picks)
         self.save_bet(player, event_num)
-        self.controller.show_frame(HomePage.HomePage)
+        self.controller.show_home_page()
 
     def get_player_score(self, player, fights):
         results = {}

@@ -103,7 +103,7 @@ class PickFightPage(ttk.Frame):
             return
         if self.ko_selected.get() == False == self.submission_selected.get() and self.decision_selected.get() == False:
             tkinter.messagebox.showinfo("Error",  'Please select a method.')
-            return('TODO: popup must select method')
+            return
         if self.round_pick.get() == '-' and self.decision_selected.get() == False:
             tkinter.messagebox.showinfo("Error",  'Please select a round.')
             return
@@ -144,8 +144,6 @@ class PickFightPage(ttk.Frame):
             self.round_option.grid(row=5, column=1, pady=10, padx=(0, 50), sticky='e')
 
     def fill_fighter_pics(self, img1, img2):
-        # f1 = ImageTk.PhotoImage(img1.result())
-        # f2 = ImageTk.PhotoImage(img2.result())
         f1 = ImageTk.PhotoImage(img1)
         f2 = ImageTk.PhotoImage(img2)
         self.fighter_one_img.configure(image=f1)
