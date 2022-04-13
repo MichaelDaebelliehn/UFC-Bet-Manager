@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-
+from webdriver_auto_update import check_driver
+import time
 
 class FightCard:
 
@@ -82,6 +83,7 @@ class FightCard:
     def get_live_page(self):
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
+        check_driver('drivers')
         browser = webdriver.Chrome(executable_path='drivers\\chromedriver.exe', options=options)
         browser.get(self.url)
         html = browser.page_source
