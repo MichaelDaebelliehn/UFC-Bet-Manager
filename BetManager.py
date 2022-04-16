@@ -136,6 +136,9 @@ class BetManager:
         self.bets.pop(name, None)
         self.save_bets(event_num)
 
+    def edit_bet(self, event_num, name):
+        if name == '': return
+
     def load_bets(self, event_num):
         filename = 'events\\ufc_' + str(event_num) + '.pkl'
         try:

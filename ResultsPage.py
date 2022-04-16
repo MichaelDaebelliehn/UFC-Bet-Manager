@@ -68,6 +68,7 @@ class ResultsPage(ttk.Frame):
     def edit_bet(self):
         index = self.list_box.curselection()[0]
         name = self.list_box.get(index)[2:-6].strip()
+        self.controller.bet_manager.edit_bet(self.controller.event_num, name)
 
     def delete_bet(self):
         index = self.list_box.curselection()[0]
